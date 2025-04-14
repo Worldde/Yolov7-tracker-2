@@ -9,13 +9,23 @@ from datetime import datetime
 import json
 import os
 
-dataset_name = 'A2A_002'
+import argparse
+
+# 新增 argparse 支援 dataset_name 設定
+parser = argparse.ArgumentParser(description="Compare multiple trackers and output annotated video with metrics.")
+parser.add_argument("--dataset", type=str, default="A2A_002", help="Dataset name, e.g., A2A_002")
+args = parser.parse_args()
+
+# 指定資料集
+dataset_name = args.dataset
+
+# dataset_name = 'A2A_002'
 # dataset_name = 'multi_drone_241016_001'
 # video_path = f'Roboflow/output/{dataset_name}_output_video.mp4'
 # gt_path = f'./motmetrics/MOTA/{dataset_name}/{dataset_name}_gt.txt'
 
-video_path = f'./video/{dataset_name}_output_video.mp4'
-gt_path = f'./ground_truth/{dataset_name}_gt.txt'
+video_path = f'video/{dataset_name}_output_video.mp4'
+gt_path = f'ground_truth/{dataset_name}_gt.txt'
 
 tracker_names = [
                  'sort', 
@@ -26,7 +36,7 @@ tracker_names = [
                 ]
 
 
-input_path = f"./track_demo_results/{dataset_name}"
+input_path = f"track_demo_results/{dataset_name}"
 tracker_colors = {
     'bytetrack': (0, 255, 0),
     'deepsort': (0, 0, 255),
@@ -35,7 +45,7 @@ tracker_colors = {
     'c_bioutrack': (0, 128, 255)
 }
 
-overlay_image_path = './image/tracker_v3.jpg'
+overlay_image_path = 'image/tracker_v3.jpg'
 scale = 1
 current_time = datetime.now().strftime('%Y%m%d_%H%M')
 output_name = f'tracking_comparison_{current_time}'
